@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLVCK</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#121214;--bg-alt:#19191c;--panel:#1f1f23;--line:#333338;--bone:#ece9e2;--muted:#8f8b83;--yellow:#f4c716;--red:#d1402b}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--bone);font-family:'Space Mono',monospace;line-height:1.5;overflow-x:hidden}
+h1,h2,h3{font-family:'Anton',sans-serif;text-transform:uppercase;font-weight:400}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+::selection{background:var(--yellow);color:#121214}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
+.hazard{height:14px;background:repeating-linear-gradient(-45deg,var(--yellow),var(--yellow) 16px,#121214 16px,#121214 32px)}
+
+header{position:sticky;top:0;z-index:50;background:rgba(18,18,20,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1180px;margin:0 auto}
+.logo{font-family:'Anton',sans-serif;font-size:26px}
+.logo span{color:var(--yellow)}
+.nav-links{display:flex;gap:28px;font-size:13px}
+.nav-links a{color:var(--muted);transition:.2s}
+.nav-links a:hover{color:var(--bone)}
+.cart-btn{position:relative;background:none;border:1px solid var(--line);color:var(--bone);font:12px 'Space Mono',monospace;padding:9px 14px;cursor:pointer;transition:.2s}
+.cart-btn:hover{border-color:var(--yellow)}
+.cart-count{position:absolute;top:-9px;right:-9px;background:var(--yellow);color:#121214;font-weight:700;font-size:11px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+.hero{position:relative;padding:110px 24px 90px;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(244,199,22,.08),transparent 60%),var(--bg);border-bottom:1px solid var(--line);overflow:hidden}
+.hero-eyebrow{font-size:12px;letter-spacing:.25em;color:var(--yellow);margin-bottom:22px}
+.hero h1{font-size:clamp(56px,12vw,148px);line-height:.86}
+.hero h1 .outline{-webkit-text-stroke:2px var(--bone);color:transparent}
+.hero-sub{max-width:480px;margin:28px auto 40px;color:var(--muted);font-size:14px;line-height:1.7}
+.btn-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:15px 30px;font:13px 'Space Mono',monospace;letter-spacing:.08em;cursor:pointer;border:1px solid var(--bone);transition:.2s}
+.btn-solid{background:var(--yellow);border-color:var(--yellow);color:#121214;font-weight:700}
+.btn-solid:hover{background:transparent;color:var(--yellow)}
+.btn-outline{background:transparent}
+.btn-outline:hover{background:var(--bone);color:#121214}
+.stamp{position:absolute;top:120px;right:6%;width:118px;height:118px;border-radius:50%;border:2px dashed var(--bone);display:flex;align-items:center;justify-content:center;animation:spin 22s linear infinite;opacity:.85}
+.stamp svg{width:100%;height:100%}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (max-width:860px){.stamp{display:none}}
+
+.manifesto{padding:90px 24px;border-bottom:1px solid var(--line)}
+.manifesto .wrap{display:grid;grid-template-columns:.9fr 1.4fr;gap:60px;align-items:start}
+.manifesto h2{font-size:clamp(32px,5vw,52px);line-height:1}
+.manifesto p{color:var(--muted);font-size:14px;line-height:1.85;margin-bottom:16px}
+.tag-eyebrow{display:inline-block;font-size:11px;letter-spacing:.2em;color:var(--yellow);border:1px solid var(--line);padding:6px 12px;margin-bottom:18px}
+@media (max-width:760px){.manifesto .wrap{grid-template-columns:1fr}}
+
+.catalog{padding:90px 24px;background:var(--bg-alt);border-bottom:1px solid var(--line)}
+.cat-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;flex-wrap:wrap;gap:20px}
+.cat-head h2{font-size:clamp(34px,5vw,54px)}
+.filters{display:flex;gap:10px;flex-wrap:wrap}
+.filter-btn{background:none;border:1px solid var(--line);color:var(--muted);font:12px 'Space Mono',monospace;padding:9px 16px;cursor:pointer;transition:.2s}
+.filter-btn:hover{color:var(--bone);border-color:var(--bone)}
+.filter-btn.active{background:var(--bone);color:#121214;border-color:var(--bone)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+@media (max-width:860px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:540px){.grid{grid-template-columns:1fr}}
+.card{background:var(--bg-alt);padding:22px;display:flex;flex-direction:column;transition:.2s}
+.card:hover{background:#1f1f24}
+.card-media{aspect-ratio:4/5;background:var(--panel);position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden;border:1px solid var(--line);cursor:pointer}
+.card-media .code{font-family:'Anton',sans-serif;font-size:64px;color:var(--line)}
+.card-tag{position:absolute;top:10px;left:10px;background:var(--yellow);color:#121214;font-size:10px;font-weight:700;padding:4px 8px}
+.card h3{font-size:16px;margin-bottom:4px;cursor:pointer}
+.card .cat-label{font-size:11px;color:var(--muted);letter-spacing:.08em;margin-bottom:12px}
+.card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+.price{font-size:15px;font-weight:700}
+.add-btn{background:none;border:1px solid var(--bone);color:var(--bone);font:11px 'Space Mono',monospace;padding:9px 12px;cursor:pointer;transition:.2s}
+.add-btn:hover{background:var(--yellow);border-color:var(--yellow);color:#121214}
+
+.lookbook{padding:90px 24px;border-bottom:1px solid var(--line)}
+.lookbook h2{font-size:clamp(34px,5vw,54px);margin-bottom:40px}
+.look-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.look-grid div{aspect-ratio:3/4;background:var(--panel);border:1px solid var(--line);display:flex;align-items:flex-end;padding:12px;font-size:11px;color:var(--muted)}
+.look-grid div:nth-child(2){grid-row:span 2;aspect-ratio:auto}
+@media (max-width:760px){.look-grid{grid-template-columns:repeat(2,1fr)}.look-grid div:nth-child(2){grid-row:span 1;aspect-ratio:3/4}}
+
+.news{padding:90px 24px;text-align:center;background:var(--bg-alt)}
+.news h2{font-size:clamp(30px,6vw,60px);margin-bottom:18px}
+.news p{color:var(--muted);font-size:14px;margin-bottom:30px}
+.news-form{display:flex;max-width:420px;margin:0 auto}
+.news-form input{flex:1;background:var(--bg);border:1px solid var(--line);border-right:none;color:var(--bone);font:13px 'Space Mono',monospace;padding:14px 16px}
+.news-form button{background:var(--yellow);border:1px solid var(--yellow);color:#121214;font-weight:700;font-size:13px;padding:0 22px;cursor:pointer}
+.news-msg{margin-top:14px;font-size:12px;color:var(--yellow);min-height:16px}
+
+footer{padding:50px 24px 30px}
+.foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;margin-bottom:30px}
+.foot-col h4{font-size:12px;letter-spacing:.1em;color:var(--muted);margin-bottom:14px}
+.foot-col a{display:block;font-size:13px;color:var(--bone);margin-bottom:8px;opacity:.85}
+.foot-col a:hover{color:var(--yellow)}
+.foot-bottom{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:20px;font-size:11px;color:var(--muted);flex-wrap:wrap;gap:10px}
+
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:90;opacity:0;pointer-events:none;transition:.25s}
+.overlay.show{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(400px,92vw);background:var(--bg-alt);border-left:1px solid var(--line);z-index:95;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column}
+.drawer.open{transform:translateX(0)}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid var(--line)}
+.drawer-head h3{font-size:20px}
+.close-btn{background:none;border:none;color:var(--bone);font-size:22px;cursor:pointer}
+.drawer-items{flex:1;overflow-y:auto;padding:10px 24px}
+.drawer-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.thumb{width:60px;height:70px;background:var(--panel);border:1px solid var(--line);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;color:var(--line);font-size:22px}
+.drawer-item-info{flex:1}
+.drawer-item-info h4{font-size:13px;margin-bottom:4px}
+.meta{font-size:11px;color:var(--muted);margin-bottom:8px}
+.qty-row{display:flex;align-items:center;gap:10px}
+.qty-btn{width:22px;height:22px;background:none;border:1px solid var(--line);color:var(--bone);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.qty-btn:hover{border-color:var(--yellow)}
+.remove-btn{margin-left:auto;background:none;border:none;color:var(--muted);font-size:11px;text-decoration:underline;cursor:pointer}
+.remove-btn:hover{color:var(--red)}
+.empty-cart{padding:60px 0;text-align:center;color:var(--muted);font-size:13px}
+.drawer-foot{padding:22px 24px;border-top:1px solid var(--line)}
+.total-row{display:flex;justify-content:space-between;font-size:15px;margin-bottom:16px}
+.total-row span:last-child{font-weight:700}
+.checkout-btn{width:100%;background:var(--yellow);border:none;color:#121214;font:700 13px 'Space Mono',monospace;padding:16px;cursor:pointer}
+.checkout-btn:hover{opacity:.9}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:98;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{position:relative;background:var(--bg-alt);border:1px solid var(--line);max-width:640px;width:100%;max-height:88vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr}
+@media (max-width:560px){.modal{grid-template-columns:1fr}}
+.modal-media{background:var(--panel);display:flex;align-items:center;justify-content:center;min-height:220px;border-right:1px solid var(--line)}
+.modal-media .code{font-family:'Anton',sans-serif;font-size:70px;color:var(--line)}
+.modal-body{padding:26px}
+.modal-body h3{font-size:22px;margin-bottom:6px}
+.modal-body .price{font-size:20px;display:block;margin-bottom:16px}
+.modal-body p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:18px}
+.size-label{font-size:11px;letter-spacing:.08em;color:var(--muted);margin-bottom:8px;display:block}
+.sizes{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.size-opt{border:1px solid var(--line);background:none;color:var(--bone);font:12px 'Space Mono',monospace;padding:8px 12px;cursor:pointer}
+.size-opt.active{background:var(--bone);color:#121214;border-color:var(--bone)}
+.modal-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--bone);font-size:24px;cursor:pointer}
+</style>
+</head>
+<body>
+
+<header><nav>
+  <div class="logo">BLVCK<span>°</span></div>
+  <div class="nav-links">
+    <a href="#catalogo">Catálogo</a><a href="#manifiesto">Manifiesto</a><a href="#lookbook">Lookbook</a><a href="#contacto">Contacto</a>
+  </div>
+  <button class="cart-btn" onclick="toggleCart(true)">CARRITO<span class="cart-count" id="cartCount">0</span></button>
+</nav></header>
+
+<div class="hazard"></div>
+
+<section class="hero">
+  <div class="stamp"><svg viewBox="0 0 100 100">
+    <defs><path id="circlePath" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"/></defs>
+    <text font-size="7.5" letter-spacing="2" fill="#ece9e2" font-family="Space Mono, monospace"><textPath href="#circlePath">• HECHO EN LA CALLE • SANTIAGO</textPath></text>
+  </svg></div>
+  <div class="hero-eyebrow">ROPA URBANA — DROP 01</div>
+  <h1>BLV<span class="outline">CK</span></h1>
+  <p class="hero-sub">Prendas hechas para el asfalto. Cortes rectos, materiales pesados y una estética que no le pide permiso a nadie.</p>
+  <div class="btn-row">
+    <a href="#catalogo" class="btn btn-solid">Ver catálogo</a>
+    <a href="#manifiesto" class="btn btn-outline">Nuestra historia</a>
+  </div>
+</section>
+
+<section class="manifesto" id="manifiesto"><div class="wrap">
+  <div>
+    <span class="tag-eyebrow">Manifiesto</span>
+    <h2>No seguimos<br>tendencias<br>Las ignoramos.</h2>
+  </div>
+  <div>
+    <p>BLVCK nace en la calle, no en la sala de reuniones. Cada prenda está pensada para quien camina, se mueve, trabaja y no tiene tiempo para ropa que no aguanta el ritmo de la ciudad.</p>
+    <p>Usamos telas pesadas, costuras reforzadas y siluetas que se ven bien tanto en el metro como en el escenario. Producción limitada por drop: cuando se acaba, se acabó.</p>
+    <p>Esto no es moda desechable. Es un uniforme para los que construyen su propio camino, calle por calle.</p>
+  </div>
+</div></section>
+
+<div class="hazard"></div>
+
+<section class="catalog" id="catalogo"><div class="wrap">
+  <div class="cat-head">
+    <h2>Catálogo</h2>
+    <div class="filters" id="filters">
+      <button class="filter-btn active" data-cat="todo">Todo</button>
+      <button class="filter-btn" data-cat="Poleras">Poleras</button>
+      <button class="filter-btn" data-cat="Pantalones">Pantalones</button>
+      <button class="filter-btn" data-cat="Chaquetas">Chaquetas</button>
+      <button class="filter-btn" data-cat="Accesorios">Accesorios</button>
+    </div>
+  </div>
+  <div class="grid" id="productGrid"></div>
+</div></section>
+
+<section class="lookbook" id="lookbook"><div class="wrap">
+  <h2>Lookbook — Drop 01</h2>
+  <div class="look-grid">
+    <div>LOOK 01 — ANDÉN</div><div>LOOK 02 — TURNO NOCHE</div><div>LOOK 03 — ZÓCALO</div><div>LOOK 04 — BLOQUE</div>
+  </div>
+</div></section>
+
+<section class="news" id="contacto"><div class="wrap">
+  <h2>Únete al drop</h2>
+  <p>Sé el primero en saber cuándo cae la próxima colección. Sin spam, solo calle.</p>
+  <form class="news-form" onsubmit="return subscribe(event)">
+    <input type="email" placeholder="tu@correo.com" required>
+    <button type="submit">Unirme</button>
+  </form>
+  <div class="news-msg" id="newsMsg"></div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="foot-grid">
+    <div class="foot-col">
+      <div class="logo" style="font-size:20px;margin-bottom:14px">BLVCK<span>°</span></div>
+      <p style="color:var(--muted);font-size:12px;max-width:220px">Ropa urbana hecha para durar. Santiago, Chile.</p>
+    </div>
+    <div class="foot-col"><h4>TIENDA</h4><a href="#catalogo">Catálogo</a><a href="#lookbook">Lookbook</a><a href="#">Guía de tallas</a></div>
+    <div class="foot-col"><h4>MARCA</h4><a href="#manifiesto">Manifiesto</a><a href="#">Nosotros</a><a href="#contacto">Contacto</a></div>
+    <div class="foot-col"><h4>SÍGUENOS</h4><a href="#">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 BLVCK. Todos los derechos reservados.</span>
+    <span>Diseñado en la calle, no en el laboratorio.</span>
+  </div>
+</div></footer>
+
+<div class="overlay" id="overlay" onclick="toggleCart(false);closeModal()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head"><h3>Tu carrito</h3><button class="close-btn" onclick="toggleCart(false)">×</button></div>
+  <div class="drawer-items" id="drawerItems"></div>
+  <div class="drawer-foot">
+    <div class="total-row"><span>Total</span><span id="drawerTotal">$0</span></div>
+    <button class="checkout-btn" onclick="checkout()">Finalizar compra</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay"><div class="modal" id="modalContent"></div></div>
+
+<script>
+const products=[
+{id:1,name:"Hoodie Oversize BLOQUE",cat:"Poleras",price:34990,code:"BQ",desc:"Polerón oversize de felpa 400gsm, capucha forrada y bolsillo canguro reforzado."},
+{id:2,name:"Cargo ANDÉN",cat:"Pantalones",price:42990,code:"AN",desc:"Pantalón cargo de drill grueso, 6 bolsillos utilitarios y corte recto."},
+{id:3,name:"Polera ZÓCALO",cat:"Poleras",price:17990,code:"ZO",desc:"Polera de algodón pesado 240gsm con estampado serigrafiado."},
+{id:4,name:"Bomber TURNO NOCHE",cat:"Chaquetas",price:59990,code:"TN",desc:"Chaqueta bomber acolchada, forro interior térmico y cierres metálicos."},
+{id:5,name:"Beanie BLVCK",cat:"Accesorios",price:12990,code:"BL",desc:"Gorro de punto grueso con parche bordado del logo."},
+{id:6,name:"Crossbody RUTA",cat:"Accesorios",price:24990,code:"RU",desc:"Bolso cruzado de lona resistente al agua, ideal para el día a día."}
+];
+let cart=[],activeFilter="todo",modalSize=null;
+const clp=n=>"$"+n.toLocaleString("es-CL");
+
+function renderGrid(){
+  const list=activeFilter==="todo"?products:products.filter(p=>p.cat===activeFilter);
+  document.getElementById("productGrid").innerHTML=list.map(p=>`
+    <div class="card">
+      <div class="card-media" onclick="openModal(${p.id})"><span class="card-tag">NUEVO</span><span class="code">${p.code}</span></div>
+      <h3 onclick="openModal(${p.id})">${p.name}</h3>
+      <div class="cat-label">${p.cat.toUpperCase()}</div>
+      <div class="card-foot"><span class="price">${clp(p.price)}</span><button class="add-btn" onclick="addToCart(${p.id},'Única')">+ Agregar</button></div>
+    </div>`).join("");
+}
+
+document.getElementById("filters").addEventListener("click",e=>{
+  if(!e.target.classList.contains("filter-btn"))return;
+  document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+  e.target.classList.add("active");
+  activeFilter=e.target.dataset.cat;
+  renderGrid();
+});
+
+function addToCart(id,size){
+  const p=products.find(x=>x.id===id);
+  const ex=cart.find(i=>i.id===id&&i.size===size);
+  ex?ex.qty++:cart.push({...p,size,qty:1});
+  renderCart();toggleCart(true);
+}
+function changeQty(id,size,d){
+  const i=cart.find(x=>x.id===id&&x.size===size);
+  if(!i)return;
+  i.qty+=d;
+  if(i.qty<=0)cart=cart.filter(x=>!(x.id===id&&x.size===size));
+  renderCart();
+}
+function removeItem(id,size){cart=cart.filter(x=>!(x.id===id&&x.size===size));renderCart();}
+
+function renderCart(){
+  const box=document.getElementById("drawerItems");
+  document.getElementById("cartCount").textContent=cart.reduce((s,i)=>s+i.qty,0);
+  box.innerHTML=cart.length?cart.map(i=>`
+    <div class="drawer-item">
+      <div class="thumb">${i.code}</div>
+      <div class="drawer-item-info">
+        <h4>${i.name}</h4>
+        <div class="meta">Talla: ${i.size} · ${clp(i.price)}</div>
+        <div class="qty-row">
+          <button class="qty-btn" onclick="changeQty(${i.id},'${i.size}',-1)">−</button><span>${i.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${i.id},'${i.size}',1)">+</button>
+          <button class="remove-btn" onclick="removeItem(${i.id},'${i.size}')">Quitar</button>
+        </div>
+      </div>
+    </div>`).join(""):`<div class="empty-cart">Tu carrito está vacío.<br>Agrega algo del catálogo.</div>`;
+  document.getElementById("drawerTotal").textContent=clp(cart.reduce((s,i)=>s+i.price*i.qty,0));
+}
+
+function toggleCart(open){
+  document.getElementById("drawer").classList.toggle("open",open);
+  document.getElementById("overlay").classList.toggle("show",open);
+}
+function checkout(){if(cart.length)alert("¡Gracias por tu compra! Esto es una demo — conecta una pasarela de pago real para procesar pedidos.");}
+function subscribe(e){e.preventDefault();document.getElementById("newsMsg").textContent="¡Listo! Te avisaremos del próximo drop.";e.target.reset();return false;}
+
+function openModal(id){
+  const p=products.find(x=>x.id===id);
+  modalSize=null;
+  const sizes=p.cat==="Accesorios"?["Única"]:["S","M","L","XL"];
+  document.getElementById("modalContent").innerHTML=`
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-media"><span class="code">${p.code}</span></div>
+    <div class="modal-body">
+      <h3>${p.name}</h3>
+      <div class="cat-label">${p.cat.toUpperCase()}</div>
+      <span class="price">${clp(p.price)}</span>
+      <p>${p.desc}</p>
+      <span class="size-label">TALLA</span>
+      <div class="sizes" id="sizeOpts">${sizes.map(s=>`<button class="size-opt" onclick="selectSize(this,'${s}')">${s}</button>`).join("")}</div>
+      <button class="btn btn-solid" style="width:100%;text-align:center" onclick="addFromModal(${p.id},'${sizes[0]}')">Agregar al carrito</button>
+    </div>`;
+  if(sizes.length===1)modalSize=sizes[0];
+  document.getElementById("modalOverlay").classList.add("show");
+  document.getElementById("overlay").classList.add("show");
+}
+function selectSize(btn,size){
+  document.querySelectorAll("#sizeOpts .size-opt").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");modalSize=size;
+}
+function addFromModal(id,fallback){addToCart(id,modalSize||fallback);closeModal();}
+function closeModal(){
+  document.getElementById("modalOverlay").classList.remove("show");
+  if(!document.getElementById("drawer").classList.contains("open"))document.getElementById("overlay").classList.remove("show");
+}
+
+renderGrid();renderCart();
+</script>
+</body>
+</html>
